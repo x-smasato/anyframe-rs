@@ -105,4 +105,94 @@ impl Selector for Peco {
     }
 }
 
-// Similar implementations for Percol, Fzf, and FzfTmux to be added
+/// FzfTmux selector
+pub struct FzfTmux {
+    path: String,
+}
+
+impl FzfTmux {
+    /// Create a new FzfTmux selector
+    #[must_use]
+    pub fn new(path: Option<String>) -> Self {
+        Self {
+            path: path.unwrap_or_else(|| "fzf-tmux".to_string()),
+        }
+    }
+}
+
+impl Selector for FzfTmux {
+    fn select(&self, input: &str, query: Option<&str>) -> Result<String> {
+        let mut cmd = Command::new(&self.path);
+
+        if let Some(q) = query {
+            cmd.arg("--query").arg(q);
+        }
+
+        // Create a child process for fzf-tmux
+        let mut child = cmd
+            .stdin(std::process::Stdio::piped())
+            .stdout(std::process::Stdio::piped())
+            .stderr(std::process::Stdio::piped())
+            .spawn()
+            .map_err(error::AnyframeError::IoError)?;
+
+        // Write input to fzf-tmux's stdin
+        if let Some(mut stdin) = child.stdin.take() {
+            stdin
+                .write_all(input.as_bytes())
+                .map_err(error::AnyframeError::IoError)?;
+        } else {
+            return Err(error::AnyframeError::IoError(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Failed to open stdin for fzf-tmux",
+            )));
+        }
+
+        // Wait for fzf-tmux to finish and get output
+        let output = child
+            .wait_with_output()
+            .map_err(error::AnyframeError::IoError)?;
+
+        if !output.status.success() {
+            // Check if the error is due to user cancellation (fzf-tmux returns 130 when cancelled with Ctrl-C)
+            if output.status.code() == Some(130) && output.stdout.is_empty() {
+                return Err(error::AnyframeError::SelectorNotFound(
+                    "Selection cancelled by user".to_string(),
+                ));
+            }
+
+            return Err(error::AnyframeError::IoError(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                format!(
+                    "fzf-tmux command failed: {}",
+                    String::from_utf8_lossy(&output.stderr)
+                ),
+            )));
+        }
+
+        // Convert output to string and trim whitespace
+        let selected = String::from_utf8(output.stdout)
+            .map_err(|e| {
+                error::AnyframeError::IoError(std::io::Error::new(
+                    std::io::ErrorKind::InvalidData,
+                    format!("Invalid UTF-8 in fzf-tmux output: {}", e),
+                ))
+            })?
+            .trim()
+            .to_string();
+
+        if selected.is_empty() {
+            return Err(error::AnyframeError::SelectorNotFound(
+                "No item selected".to_string(),
+            ));
+        }
+
+        Ok(selected)
+    }
+
+    fn name(&self) -> &'static str {
+        "fzf-tmux"
+    }
+}
+
+// Similar implementations for Percol and Fzf to be added
