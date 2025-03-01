@@ -105,7 +105,12 @@ impl Action for Put {
         let quoted_item = if self.quote_item {
             // Quote special characters with backslashes
             // This is similar to the (q) parameter in zsh
-            format!("\\\"{}\\\"", item.replace('\\', "\\\\").replace('"', "\\\"").replace('$', "\\$"))
+            format!(
+                "\\\"{}\\\"",
+                item.replace('\\', "\\\\")
+                    .replace('"', "\\\"")
+                    .replace('$', "\\$")
+            )
         } else {
             item.to_string()
         };
