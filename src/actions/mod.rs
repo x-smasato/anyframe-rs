@@ -34,11 +34,24 @@ impl Action for Execute {
 pub struct Insert;
 
 impl Action for Insert {
-    fn perform(&self, _item: &str) -> Result<()> {
-        // Implementation to insert the selected item
-        // This will need to interact with zsh to insert the item
+    fn perform(&self, item: &str) -> Result<()> {
+        // Implementation to insert the selected item at the cursor position in zsh
+        let insert_output = Command::new("zsh")
+            .arg("-c")
+            .arg(format!("print -z \"{}\"", item))
+            .output()
+            .map_err(|e| {
+                error::AnyframeError::ActionError(format!("Failed to execute insert command: {}", e))
+            })?;
 
-        Ok(()) // Placeholder
+        if !insert_output.status.success() {
+            return Err(error::AnyframeError::ActionError(format!(
+                "Insert command failed: {}",
+                String::from_utf8_lossy(&insert_output.stderr)
+            )));
+        }
+
+        Ok(())
     }
 
     fn name(&self) -> &str {
