@@ -1,0 +1,5 @@
+# Clippy configuration for anyframe-rs
+# Based on mise project's clippy configuration
+
+# Disable some pedantic lints that are too restrictive
+too-many-arguments-threshold = 10

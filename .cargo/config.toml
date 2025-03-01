@@ -1,0 +1,7 @@
+# anyframe-rs cargo configuration
+
+[env]
+RUST_TEST_THREADS = '1'
+
+# Clippy configuration is applied via command line flags
+# See .clippy.toml for specific lints configuration
