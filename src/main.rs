@@ -2,7 +2,7 @@
 
 use anyframe_rs::{
     actions::{ChangeDirectory, Execute, Insert},
-    selectors::{Peco, Percol},
+    selectors::Peco,
     sources::{GhqRepository, GitBranch, GitStatus, History, Process},
     widgets::{
         CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Kill, Widget,
