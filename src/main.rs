@@ -3,9 +3,9 @@
 use anyframe_rs::{
     actions::{ChangeDirectory, Execute, Insert},
     selectors::{Peco, Percol},
-    sources::{GhqRepository, GitBranch, GitStatus, History},
+    sources::{GhqRepository, GitBranch, GitStatus, History, Process},
     widgets::{
-        CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Widget,
+        CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Kill, Widget,
     },
 };
 use clap::{Parser, Subcommand};
@@ -46,6 +46,8 @@ enum Commands {
         #[arg(short, long)]
         pattern: Option<String>,
     },
+    /// Kill a process
+    Kill,
 }
 
 fn main() -> anyframe_rs::Result<()> {
@@ -93,6 +95,13 @@ fn main() -> anyframe_rs::Result<()> {
             let selector = Peco::new(None);
             let action = Execute;
             let widget = GitAdd::new(source, selector, action);
+            widget.run()?;
+        }
+        Commands::Kill => {
+            let source = Process;
+            let selector = Peco::new(None);
+            let action = Execute;
+            let widget = Kill::new(source, selector, action);
             widget.run()?;
         }
     }
