@@ -41,7 +41,10 @@ impl Action for Insert {
             .arg(format!("print -z \"{}\"", item))
             .output()
             .map_err(|e| {
-                error::AnyframeError::ActionError(format!("Failed to execute insert command: {}", e))
+                error::AnyframeError::ActionError(format!(
+                    "Failed to execute insert command: {}",
+                    e
+                ))
             })?;
 
         if !insert_output.status.success() {
