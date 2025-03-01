@@ -3,10 +3,10 @@
 use anyframe_rs::{
     actions::{ChangeDirectory, Execute, Insert},
     selectors::Peco,
-    sources::{Cdr, GhqRepository, GitBranch, GitStatus, History},
+    sources::{Cdr, GhqRepository, GitBranch, GitStatus, History, Process},
     widgets::{
         CdGhqRepository, Cdr as CdrWidget, CheckoutGitBranch, ExecuteHistory, GitAdd,
-        InsertGitBranch, Widget,
+        InsertGitBranch, Kill, Widget,
     },
 };
 use clap::{Parser, Subcommand};
@@ -49,6 +49,8 @@ enum Commands {
     },
     /// Change to a recent directory
     Cdr,
+    /// Kill a process
+    Kill,
 }
 
 fn main() -> anyframe_rs::Result<()> {
@@ -103,6 +105,13 @@ fn main() -> anyframe_rs::Result<()> {
             let selector = Peco::new(None);
             let action = ChangeDirectory;
             let widget = CdrWidget::new(source, selector, action);
+            widget.run()?;
+        }
+        Commands::Kill => {
+            let source = Process;
+            let selector = Peco::new(None);
+            let action = Execute;
+            let widget = Kill::new(source, selector, action);
             widget.run()?;
         }
     }

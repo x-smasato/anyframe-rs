@@ -219,4 +219,40 @@ impl<S: Source, F: Selector, A: Action> Widget for Cdr<S, F, A> {
         "cdr"
     }
 }
+/// Kill process widget
+pub struct Kill<S: Source, F: Selector, A: Action> {
+    source: S,
+    selector: F,
+    action: A,
+}
+
+impl<S: Source, F: Selector, A: Action> Kill<S, F, A> {
+    /// Create a new Kill widget
+    pub fn new(source: S, selector: F, action: A) -> Self {
+        Self {
+            source,
+            selector,
+            action,
+        }
+    }
+}
+
+impl<S: Source, F: Selector, A: Action> Widget for Kill<S, F, A> {
+    fn run(&self) -> Result<()> {
+        let data = self.source.get_data()?;
+        let selected = self.selector.select(&data, None)?;
+
+        // Extract the first field (PID) from the selected line
+        let pid = selected.split_whitespace().next().unwrap_or("");
+
+        // Execute kill command
+        self.action.perform(&format!("kill {}", pid))?;
+
+        Ok(())
+    }
+
+    fn name(&self) -> &'static str {
+        "kill"
+    }
+}
 // Similar implementations for other widgets to be added
