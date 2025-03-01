@@ -42,7 +42,7 @@ impl Selector for Peco {
         Ok("Selected item".to_string()) // Placeholder
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "peco"
     }
 }

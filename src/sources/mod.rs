@@ -42,7 +42,7 @@ impl Source for History {
         Ok(history_str)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "history"
     }
 }
@@ -79,7 +79,7 @@ impl Source for Directory {
         Ok(file_list)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "directory"
     }
 }
@@ -121,7 +121,7 @@ impl Source for Process {
         Ok(ps_str)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "process"
     }
 }

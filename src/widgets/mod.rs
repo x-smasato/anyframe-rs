@@ -40,7 +40,7 @@ impl<S: Source, F: Selector, A: Action> Widget for ExecuteHistory<S, F, A> {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "execute-history"
     }
 }

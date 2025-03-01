@@ -24,7 +24,7 @@ impl Action for Execute {
         Ok(()) // Placeholder
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "execute"
     }
 }
