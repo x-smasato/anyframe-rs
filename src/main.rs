@@ -2,7 +2,7 @@
 
 use anyframe_rs::{
     actions::{ChangeDirectory, Execute, Insert},
-    selectors::Peco,
+    selectors::{Fzf, FzfTmux, Peco},
     sources::{GhqRepository, GitBranch, GitStatus, History},
     widgets::{
         CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Widget,

@@ -22,14 +22,14 @@
 //! ```rust,no_run
 //! use anyframe_rs::{
 //!     actions::Execute,
-//!     selectors::Peco,
+//!     selectors::Fzf,
 //!     sources::History,
 //!     widgets::{ExecuteHistory, Widget},
 //! };
 //!
 //! fn main() -> anyframe_rs::Result<()> {
 //!     let source = History;
-//!     let selector = Peco::new(None);
+//!     let selector = Fzf::new(None);
 //!     let action = Execute;
 //!     let widget = ExecuteHistory::new(source, selector, action);
 //!     widget.run()?;
