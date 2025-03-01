@@ -3,8 +3,10 @@
 use anyframe_rs::{
     actions::{ChangeDirectory, Execute, Insert},
     selectors::Peco,
-    sources::{GitBranch, GitStatus, GhqRepository, History},
-    widgets::{CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Widget},
+    sources::{GhqRepository, GitBranch, GitStatus, History},
+    widgets::{
+        CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Widget,
+    },
 };
 use clap::{Parser, Subcommand};
 
