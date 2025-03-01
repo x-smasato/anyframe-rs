@@ -1,11 +1,11 @@
 //! anyframe-rs: A Rust implementation of anyframe, a peco/percol/fzf wrapper plugin for zsh
 
 use anyframe_rs::{
-    actions::{ChangeDirectory, Execute, Insert},
-    selectors::{Fzf, FzfTmux, Peco, Percol},
-    sources::{Cdr, GhqRepository, GitBranch, GitStatus, History, Process},
+    actions::Execute,
+    selectors::Peco,
+    sources::History,
     widgets::{
-        CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Widget,
+        ExecuteHistory, Widget,
     },
 };
 
