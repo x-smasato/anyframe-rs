@@ -2,7 +2,8 @@
 //!
 //! Actions perform operations on selected items, such as executing, inserting, or putting them.
 
-use crate::Result;
+use crate::{error, Result};
+use std::process::Command;
 
 /// Trait for actions
 pub trait Action {
@@ -45,4 +46,33 @@ impl Action for Insert {
     }
 }
 
+/// Change directory action
+pub struct ChangeDirectory;
+
+impl Action for ChangeDirectory {
+    fn perform(&self, item: &str) -> Result<()> {
+        // Change directory to the selected repository
+        // This will need to interact with zsh to change the directory
+        let cd_output = Command::new("zsh")
+            .arg("-c")
+            .arg(format!("cd {}", item))
+            .output()
+            .map_err(|e| {
+                error::AnyframeError::ActionError(format!("Failed to execute cd command: {}", e))
+            })?;
+
+        if !cd_output.status.success() {
+            return Err(error::AnyframeError::ActionError(format!(
+                "cd command failed: {}",
+                String::from_utf8_lossy(&cd_output.stderr)
+            )));
+        }
+
+        Ok(())
+    }
+
+    fn name(&self) -> &str {
+        "change-directory"
+    }
+}
 // Similar implementations for other actions to be added

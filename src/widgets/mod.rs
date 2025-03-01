@@ -45,6 +45,38 @@ impl<S: Source, F: Selector, A: Action> Widget for ExecuteHistory<S, F, A> {
     }
 }
 
+/// Cd ghq repository widget
+pub struct CdGhqRepository<S: Source, F: Selector, A: Action> {
+    source: S,
+    selector: F,
+    action: A,
+}
+
+impl<S: Source, F: Selector, A: Action> CdGhqRepository<S, F, A> {
+    /// Create a new CdGhqRepository widget
+    pub fn new(source: S, selector: F, action: A) -> Self {
+        Self {
+            source,
+            selector,
+            action,
+        }
+    }
+}
+
+impl<S: Source, F: Selector, A: Action> Widget for CdGhqRepository<S, F, A> {
+    fn run(&self) -> Result<()> {
+        let data = self.source.get_data()?;
+        let selected = self.selector.select(&data, None)?;
+        self.action.perform(&selected)?;
+
+        Ok(())
+    }
+
+    fn name(&self) -> &str {
+        "cd-ghq-repository"
+    }
+}
+
 /// Checkout git branch widget
 pub struct CheckoutGitBranch<S: Source, F: Selector, A: Action> {
     source: S,
@@ -156,5 +188,4 @@ impl<S: Source, F: Selector, A: Action> Widget for GitAdd<S, F, A> {
         "git-add"
     }
 }
-
 // Similar implementations for other widgets to be added

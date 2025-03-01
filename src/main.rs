@@ -1,10 +1,12 @@
 //! anyframe-rs: A Rust implementation of anyframe, a peco/percol/fzf wrapper plugin for zsh
 
 use anyframe_rs::{
-    actions::{Execute, Insert},
+    actions::{ChangeDirectory, Execute, Insert},
     selectors::Peco,
-    sources::{GitBranch, GitStatus, History},
-    widgets::{CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Widget},
+    sources::{GhqRepository, GitBranch, GitStatus, History},
+    widgets::{
+        CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Widget,
+    },
 };
 use clap::{Parser, Subcommand};
 
@@ -19,6 +21,8 @@ struct Cli {
 enum Commands {
     /// Execute a command from history
     ExecuteHistory,
+    /// Change directory to a ghq repository
+    CdGhqRepository,
     /// Checkout a git branch
     CheckoutGitBranch {
         #[arg(short, long)]
@@ -53,6 +57,13 @@ fn main() -> anyframe_rs::Result<()> {
             let selector = Peco::new(None);
             let action = Execute;
             let widget = ExecuteHistory::new(source, selector, action);
+            widget.run()?;
+        }
+        Commands::CdGhqRepository => {
+            let source = GhqRepository;
+            let selector = Peco::new(None);
+            let action = ChangeDirectory;
+            let widget = CdGhqRepository::new(source, selector, action);
             widget.run()?;
         }
         Commands::CheckoutGitBranch {
