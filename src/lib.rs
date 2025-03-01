@@ -1,4 +1,41 @@
-//! anyframe-rs: A Rust implementation of anyframe, a peco/percol/fzf wrapper plugin for zsh
+//! # anyframe-rs
+//!
+//! A Rust implementation of [anyframe](https://github.com/x-smasato/anyframe), a peco/percol/fzf wrapper plugin for zsh.
+//!
+//! ## Overview
+//!
+//! anyframe-rs provides interactive filtering of various data sources (command history, directories, processes, etc.)
+//! using popular filtering tools like peco, percol, fzf, and fzf-tmux. It is designed to be used as a Zsh plugin,
+//! providing widgets for common operations like executing commands from history, changing directories, and more.
+//!
+//! ## Architecture
+//!
+//! anyframe-rs consists of four main components:
+//!
+//! - **Sources**: Provide data to be filtered (history, directories, processes, etc.)
+//! - **Selectors**: Interactive filtering tools (peco, percol, fzf, fzf-tmux)
+//! - **Actions**: Perform operations on selected items (execute, insert, put)
+//! - **Widgets**: Combine sources, selectors, and actions to create useful functionalities
+//!
+//! ## Example
+//!
+//! ```rust
+//! use anyframe_rs::{
+//!     actions::Execute,
+//!     selectors::Peco,
+//!     sources::History,
+//!     widgets::{ExecuteHistory, Widget},
+//! };
+//!
+//! fn main() -> anyframe_rs::Result<()> {
+//!     let source = History;
+//!     let selector = Peco::new(None);
+//!     let action = Execute;
+//!     let widget = ExecuteHistory::new(source, selector, action);
+//!     widget.run()?;
+//!     Ok(())
+//! }
+//! ```
 
 pub mod actions;
 pub mod selectors;
@@ -9,20 +46,26 @@ pub mod widgets;
 pub mod error {
     use thiserror::Error;
 
+    /// Errors that can occur in anyframe-rs operations
     #[derive(Error, Debug)]
     pub enum AnyframeError {
+        /// Error when a selector is not found
         #[error("Selector not found: {0}")]
         SelectorNotFound(String),
 
+        /// Error from a source
         #[error("Source error: {0}")]
         SourceError(String),
 
+        /// Error from an action
         #[error("Action error: {0}")]
         ActionError(String),
 
+        /// Error from a widget
         #[error("Widget error: {0}")]
         WidgetError(String),
 
+        /// IO error
         #[error("IO error: {0}")]
         IoError(#[from] std::io::Error),
     }

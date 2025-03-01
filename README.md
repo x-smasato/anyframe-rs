@@ -1,25 +1,100 @@
-# anyframe-rs
+<div align="center">
+<h1>anyframe-rs</h1>
+<p><em>A Rust implementation of anyframe, a peco/percol/fzf wrapper plugin for zsh</em></p>
+</div>
 
-A Rust implementation of [anyframe](https://github.com/x-smasato/anyframe), a peco/percol/fzf wrapper plugin for zsh.
+## What is it?
 
-## Overview
+anyframe-rs is a Rust implementation of [anyframe](https://github.com/x-smasato/anyframe), providing:
 
-anyframe-rs provides the same functionality as the original anyframe zsh plugin, but implemented in Rust for better performance and reliability.
+- Interactive filtering of various data sources (command history, directories, processes, etc.)
+- Integration with popular filtering tools like [peco](https://github.com/peco/peco), [percol](https://github.com/mooz/percol), [fzf](https://github.com/junegunn/fzf), and fzf-tmux
+- Zsh widgets for common operations like executing commands from history, changing directories, and more
+- Better performance and reliability through Rust implementation
+
+## Installation
+
+### Prerequisites
+
+First, you need to install one of the following filtering tools:
+- [peco](https://github.com/peco/peco)
+- [percol](https://github.com/mooz/percol)
+- [fzf](https://github.com/junegunn/fzf)
+- fzf-tmux
+
+### From Source
+
+```sh-session
+$ git clone https://github.com/x-smasato/anyframe-rs
+$ cd anyframe-rs
+$ cargo build --release
+$ cp target/release/anyframe-rs ~/.local/bin/
+```
+
+## Usage
+
+### Basic Setup
+
+Add the following to your `.zshrc`:
+
+```zsh
+# Load anyframe-rs plugin
+source /path/to/anyframe-rs/anyframe.plugin.zsh
+```
+
+### Keybindings
+
+You can map anyframe-rs widgets to whatever key you like:
+
+```zsh
+bindkey '^xr' anyframe-widget-execute-history
+bindkey '^xd' anyframe-widget-cd-directory
+# Add more keybindings as needed
+```
 
 ## Components
+
+anyframe-rs consists of four main components:
 
 - **Sources**: Provide data to be filtered (history, directories, processes, etc.)
 - **Selectors**: Interactive filtering tools (peco, percol, fzf, fzf-tmux)
 - **Actions**: Perform operations on selected items (execute, insert, put)
 - **Widgets**: Combine sources, selectors, and actions to create useful functionalities
 
-## Installation
+## Configuration
 
-Coming soon.
+```zsh
+# Specify which selector to use
+zstyle ":anyframe:selector:" use peco
+# or
+zstyle ":anyframe:selector:" use fzf
 
-## Usage
+# Specify path and options for selectors
+zstyle ":anyframe:selector:peco:" command 'peco --no-ignore-case'
+zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
+```
 
-Coming soon.
+## Examples
+
+### Execute a command from history
+
+```zsh
+anyframe-widget-execute-history
+```
+
+### Change to a directory
+
+```zsh
+anyframe-widget-cd-directory
+```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to anyframe-rs.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Development
 
