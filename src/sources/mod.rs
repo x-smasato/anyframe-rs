@@ -91,9 +91,12 @@ impl Source for Process {
     fn get_data(&self) -> Result<String> {
         // Get process list using ps command
         let username = std::env::var("USER").map_err(|e| {
-            error::AnyframeError::SourceError(format!("Failed to get USER environment variable: {}", e))
+            error::AnyframeError::SourceError(format!(
+                "Failed to get USER environment variable: {}",
+                e
+            ))
         })?;
-        
+
         let ps_output = Command::new("ps")
             .arg("-u")
             .arg(&username)
