@@ -22,17 +22,26 @@
 //! ```rust,no_run
 //! use anyframe_rs::{
 //!     actions::Execute,
-//!     selectors::Fzf,
+//!     selectors::{Fzf, FzfTmux, Peco},
 //!     sources::History,
 //!     widgets::{ExecuteHistory, Widget},
 //! };
 //!
 //! fn main() -> anyframe_rs::Result<()> {
+//!     // Using Fzf selector
 //!     let source = History;
 //!     let selector = Fzf::new(None);
 //!     let action = Execute;
 //!     let widget = ExecuteHistory::new(source, selector, action);
 //!     widget.run()?;
+//!
+//!     // Or using FzfTmux selector
+//!     let source = History;
+//!     let selector = FzfTmux::new(None);
+//!     let action = Execute;
+//!     let widget = ExecuteHistory::new(source, selector, action);
+//!     widget.run()?;
+//!     
 //!     Ok(())
 //! }
 //! ```

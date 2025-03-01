@@ -244,7 +244,7 @@ impl Selector for FzfTmux {
             .map_err(error::AnyframeError::IoError)?;
 
         if !output.status.success() {
-            // Check if the error is due to user cancellation (fzf-tmux returns 130 when cancelled)
+            // Check if the error is due to user cancellation (fzf-tmux returns 130 when cancelled with Ctrl-C)
             if output.status.code() == Some(130) && output.stdout.is_empty() {
                 return Err(error::AnyframeError::SelectorNotFound(
                     "Selection cancelled by user".to_string(),
