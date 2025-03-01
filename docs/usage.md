@@ -51,7 +51,9 @@ anyframe-rsは以下のウィジェットを提供します：
 
 - `anyframe-widget-execute-history`: コマンド履歴からコマンドを選択して実行
 - `anyframe-widget-cd-directory`: ディレクトリを選択して移動
-- （他のウィジェットは開発中）
+- `anyframe-widget-checkout-git-branch`: Gitブランチを選択してチェックアウト
+- `anyframe-widget-insert-git-branch`: Gitブランチ名を選択して挿入
+- `anyframe-widget-git-add`: Gitステータスから変更ファイルを選択して追加
 
 ## カスタムウィジェットの作成
 

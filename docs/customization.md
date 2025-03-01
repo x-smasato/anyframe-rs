@@ -2,6 +2,33 @@
 
 anyframe-rsは高度にカスタマイズ可能で、独自のソース、セレクタ、アクション、ウィジェットを作成できます。
 
+## 利用可能なコンポーネント
+
+anyframe-rsには以下のコンポーネントが実装されています：
+
+### ソース
+- `History`: コマンド履歴を提供
+- `Directory`: ディレクトリリストを提供
+- `Process`: プロセスリストを提供
+- `GhqRepository`: Ghqリポジトリリストを提供
+- `GitBranch`: Gitブランチリストを提供
+- `GitStatus`: Gitステータスを提供
+
+### セレクタ
+- `Peco`: Pecoを使用した対話的フィルタリング
+
+### アクション
+- `Execute`: 選択されたアイテムを実行
+- `Insert`: 選択されたアイテムを挿入
+- `ChangeDirectory`: 選択されたディレクトリに移動
+
+### ウィジェット
+- `ExecuteHistory`: コマンド履歴からコマンドを選択して実行
+- `CdGhqRepository`: Ghqリポジトリを選択して移動
+- `CheckoutGitBranch`: Gitブランチを選択してチェックアウト
+- `InsertGitBranch`: Gitブランチ名を選択して挿入
+- `GitAdd`: Gitステータスから変更ファイルを選択して追加
+
 ## 独自のソースを作成する
 
 新しいソースを作成するには、`Source`トレイトを実装します：

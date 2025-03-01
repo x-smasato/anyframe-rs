@@ -88,6 +88,24 @@ anyframe-widget-execute-history
 anyframe-widget-cd-directory
 ```
 
+### Checkout a git branch
+
+```zsh
+anyframe-widget-checkout-git-branch
+```
+
+### Insert a git branch name
+
+```zsh
+anyframe-widget-insert-git-branch
+```
+
+### Add files to git
+
+```zsh
+anyframe-widget-git-add
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to anyframe-rs.

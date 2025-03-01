@@ -24,9 +24,13 @@ cp target/release/anyframe-rs ~/.local/bin/
 
 ## Cargoからのインストール（将来的に対応予定）
 
+将来的には以下のコマンドでインストールできるようになる予定です：
+
 ```sh
 cargo install anyframe-rs
 ```
+
+注意：現在はまだCratesへの公開は行われていません。
 
 ## Zshプラグインとしてのセットアップ
 
