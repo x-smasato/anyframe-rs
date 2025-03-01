@@ -20,3 +20,22 @@ Coming soon.
 ## Usage
 
 Coming soon.
+
+## Development
+
+### Pre-commit hooks
+
+This project uses [pre-commit](https://pre-commit.com/) to run automatic checks before each commit.
+
+To install pre-commit:
+
+```bash
+pip install pre-commit
+pre-commit install
+```
+
+To run pre-commit manually:
+
+```bash
+pre-commit run --all-files
+```
