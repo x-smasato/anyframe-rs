@@ -154,7 +154,7 @@ impl Source for GhqRepository {
         Ok(ghq_str)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "ghq-repository"
     }
 }
@@ -238,7 +238,7 @@ impl Source for GitBranch {
         Ok(processed_output)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "git-branch"
     }
 }
@@ -325,7 +325,7 @@ impl Source for GitStatus {
         Ok(processed_output)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "git-status"
     }
 }
