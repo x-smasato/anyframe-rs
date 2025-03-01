@@ -19,7 +19,7 @@
 //!
 //! ## Example
 //!
-//! ```rust
+//! ```rust,no_run
 //! use anyframe_rs::{
 //!     actions::Execute,
 //!     selectors::Peco,
