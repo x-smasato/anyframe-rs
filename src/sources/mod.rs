@@ -53,29 +53,32 @@ pub struct Directory;
 impl Source for Directory {
     fn get_data(&self) -> Result<String> {
         // Get current directory path
-        let current_dir = std::env::current_dir()
-            .map_err(|e| error::AnyframeError::SourceError(format!("Failed to get current directory: {}", e)))?;
-        
+        let current_dir = std::env::current_dir().map_err(|e| {
+            error::AnyframeError::SourceError(format!("Failed to get current directory: {}", e))
+        })?;
+
         // Read directory entries
-        let entries = std::fs::read_dir(&current_dir)
-            .map_err(|e| error::AnyframeError::SourceError(format!("Failed to read directory: {}", e)))?;
-        
+        let entries = std::fs::read_dir(&current_dir).map_err(|e| {
+            error::AnyframeError::SourceError(format!("Failed to read directory: {}", e))
+        })?;
+
         // Collect file names
         let mut file_list = String::new();
         for entry in entries {
-            let entry = entry
-                .map_err(|e| error::AnyframeError::SourceError(format!("Failed to read directory entry: {}", e)))?;
-            
+            let entry = entry.map_err(|e| {
+                error::AnyframeError::SourceError(format!("Failed to read directory entry: {}", e))
+            })?;
+
             let file_name = entry.file_name();
             let file_name_str = file_name.to_string_lossy();
-            
+
             file_list.push_str(&file_name_str);
             file_list.push('\n');
         }
-        
+
         Ok(file_list)
     }
-    
+
     fn name(&self) -> &str {
         "directory"
     }
