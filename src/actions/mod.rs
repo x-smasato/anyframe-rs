@@ -27,14 +27,13 @@ impl Action for Execute {
         // This is similar to how the original anyframe-action-execute function works
         let execute_output = Command::new("zsh")
             .arg("-c")
-            .arg(format!("BUFFER=\"{}\"; zle accept-line 2>/dev/null || eval \"$BUFFER\"", 
-                         item.replace("\"", "\\\"").replace("$", "\\$")))
+            .arg(format!(
+                "BUFFER=\"{}\"; zle accept-line 2>/dev/null || eval \"$BUFFER\"",
+                item.replace("\"", "\\\"").replace("$", "\\$")
+            ))
             .output()
             .map_err(|e| {
-                error::AnyframeError::ActionError(format!(
-                    "Failed to execute command: {}",
-                    e
-                ))
+                error::AnyframeError::ActionError(format!("Failed to execute command: {}", e))
             })?;
 
         if !execute_output.status.success() {
