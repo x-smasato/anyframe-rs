@@ -1,0 +1,17 @@
+# Rustfmt Configuration for anyframe-rs
+# Based on standard Rust formatting conventions
+
+# Maximum width of each line
+max_width = 100
+
+# Use tabs instead of spaces for indentation
+hard_tabs = false
+
+# Number of spaces per tab
+tab_spaces = 4
+
+# Reorder imports alphabetically
+reorder_imports = true
+
+# Reorder modules alphabetically
+reorder_modules = true

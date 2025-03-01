@@ -29,4 +29,20 @@ impl Action for Execute {
     }
 }
 
+/// Insert action
+pub struct Insert;
+
+impl Action for Insert {
+    fn perform(&self, _item: &str) -> Result<()> {
+        // Implementation to insert the selected item
+        // This will need to interact with zsh to insert the item
+
+        Ok(()) // Placeholder
+    }
+
+    fn name(&self) -> &str {
+        "insert"
+    }
+}
+
 // Similar implementations for other actions to be added
