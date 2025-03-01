@@ -188,4 +188,36 @@ impl<S: Source, F: Selector, A: Action> Widget for GitAdd<S, F, A> {
         "git-add"
     }
 }
+
+/// Put history widget
+pub struct PutHistory<S: Source, F: Selector, A: Action> {
+    source: S,
+    selector: F,
+    action: A,
+}
+
+impl<S: Source, F: Selector, A: Action> PutHistory<S, F, A> {
+    /// Create a new PutHistory widget
+    pub fn new(source: S, selector: F, action: A) -> Self {
+        Self {
+            source,
+            selector,
+            action,
+        }
+    }
+}
+
+impl<S: Source, F: Selector, A: Action> Widget for PutHistory<S, F, A> {
+    fn run(&self) -> Result<()> {
+        let data = self.source.get_data()?;
+        let selected = self.selector.select(&data, None)?;
+        self.action.perform(&selected)?;
+
+        Ok(())
+    }
+
+    fn name(&self) -> &'static str {
+        "put-history"
+    }
+}
 // Similar implementations for other widgets to be added

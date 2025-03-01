@@ -112,4 +112,42 @@ impl Action for ChangeDirectory {
         "change-directory"
     }
 }
+
+/// Put action
+///
+/// Puts the selected item into the command line buffer, replacing the current content.
+/// Similar to the original anyframe-action-put function.
+pub struct Put;
+
+impl Action for Put {
+    fn perform(&self, item: &str) -> Result<()> {
+        // Implementation to put the selected item into the command line buffer
+        let put_output = Command::new("zsh")
+            .arg("-c")
+            .arg(format!(
+                "BUFFER=\"{}\"; CURSOR=$#BUFFER; zle -R -c 2>/dev/null || print -z \"$BUFFER\"",
+                item.replace('"', "\\\"").replace('$', "\\$")
+            ))
+            .output()
+            .map_err(|e| {
+                error::AnyframeError::ActionError(format!(
+                    "Failed to execute put command: {}",
+                    e
+                ))
+            })?;
+
+        if !put_output.status.success() {
+            return Err(error::AnyframeError::ActionError(format!(
+                "Put command failed: {}",
+                String::from_utf8_lossy(&put_output.stderr)
+            )));
+        }
+
+        Ok(())
+    }
+
+    fn name(&self) -> &'static str {
+        "put"
+    }
+}
 // Similar implementations for other actions to be added
