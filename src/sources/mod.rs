@@ -168,6 +168,7 @@ pub struct GitBranch {
 
 impl GitBranch {
     /// Create a new GitBranch source
+    #[must_use]
     pub fn new(
         include_current_branch: bool,
         show_remote_branches: bool,
@@ -249,6 +250,7 @@ pub struct GitStatus {
 
 impl GitStatus {
     /// Create a new GitStatus source
+    #[must_use]
     pub fn new(pattern: Option<String>) -> Self {
         Self { pattern }
     }
