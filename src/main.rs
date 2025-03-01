@@ -3,9 +3,9 @@
 use anyframe_rs::{
     actions::{ChangeDirectory, Execute, Insert, Put},
     selectors::Peco,
-    sources::{GhqRepository, GitBranch, GitStatus, History},
+    sources::{GhqRepository, GitBranch, GitStatus, History, Process},
     widgets::{
-        CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, PutHistory, Widget,
+        CdGhqRepository, CheckoutGitBranch, ExecuteHistory, GitAdd, InsertGitBranch, Kill, PutHistory, Widget,
     },
 };
 use clap::{Parser, Subcommand};
@@ -48,6 +48,8 @@ enum Commands {
     },
     /// Put a command from history
     PutHistory,
+    /// Kill a process
+    Kill,
 }
 
 fn main() -> anyframe_rs::Result<()> {
@@ -100,8 +102,15 @@ fn main() -> anyframe_rs::Result<()> {
         Commands::PutHistory => {
             let source = History;
             let selector = Peco::new(None);
-            let action = Put;
+            let action = Put::new(false);
             let widget = PutHistory::new(source, selector, action);
+            widget.run()?;
+        }
+        Commands::Kill => {
+            let source = Process;
+            let selector = Peco::new(None);
+            let action = Execute;
+            let widget = Kill::new(source, selector, action);
             widget.run()?;
         }
     }
