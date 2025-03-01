@@ -1,0 +1,14 @@
+[package]
+name = "anyframe-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["x-smasato"]
+description = "A Rust implementation of anyframe, a peco/percol/fzf wrapper plugin for zsh"
+license = "MIT"
+repository = "https://github.com/x-smasato/anyframe-rs"
+readme = "README.md"
+
+[dependencies]
+clap = { version = "4.4", features = ["derive"] }  # For command-line argument parsing
+anyhow = "1.0"  # For error handling
+thiserror = "1.0"  # For custom error types
