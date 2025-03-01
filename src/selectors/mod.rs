@@ -43,13 +43,13 @@ impl Selector for Peco {
             .stdout(std::process::Stdio::piped())
             .stderr(std::process::Stdio::piped())
             .spawn()
-            .map_err(|e| error::AnyframeError::IoError(e))?;
+            .map_err(error::AnyframeError::IoError)?;
 
         // Write input to peco's stdin
         if let Some(mut stdin) = child.stdin.take() {
             stdin
                 .write_all(input.as_bytes())
-                .map_err(|e| error::AnyframeError::IoError(e))?;
+                .map_err(error::AnyframeError::IoError)?;
         } else {
             return Err(error::AnyframeError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
@@ -60,7 +60,7 @@ impl Selector for Peco {
         // Wait for peco to finish and get output
         let output = child
             .wait_with_output()
-            .map_err(|e| error::AnyframeError::IoError(e))?;
+            .map_err(error::AnyframeError::IoError)?;
 
         if !output.status.success() {
             // Check if the error is due to user cancellation (peco returns 1 when cancelled)
