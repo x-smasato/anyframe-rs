@@ -29,7 +29,7 @@ impl Peco {
 }
 
 impl Selector for Peco {
-    fn select(&self, input: &str, query: Option<&str>) -> Result<String> {
+    fn select(&self, _input: &str, query: Option<&str>) -> Result<String> {
         let mut cmd = Command::new(&self.path);
 
         if let Some(q) = query {

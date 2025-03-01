@@ -17,7 +17,7 @@ pub trait Action {
 pub struct Execute;
 
 impl Action for Execute {
-    fn perform(&self, item: &str) -> Result<()> {
+    fn perform(&self, _item: &str) -> Result<()> {
         // Implementation to execute the selected command
         // This will need to interact with zsh to execute the command
 
