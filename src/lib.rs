@@ -13,16 +13,16 @@ pub mod error {
     pub enum AnyframeError {
         #[error("Selector not found: {0}")]
         SelectorNotFound(String),
-        
+
         #[error("Source error: {0}")]
         SourceError(String),
-        
+
         #[error("Action error: {0}")]
         ActionError(String),
-        
+
         #[error("Widget error: {0}")]
         WidgetError(String),
-        
+
         #[error("IO error: {0}")]
         IoError(#[from] std::io::Error),
     }
