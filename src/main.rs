@@ -1,12 +1,12 @@
 //! anyframe-rs: A Rust implementation of anyframe, a peco/percol/fzf wrapper plugin for zsh
 
 use anyframe_rs::{
-    actions::{ChangeDirectory, Execute, Insert},
+    actions::{ChangeDirectory, Execute, Insert, Put},
     selectors::Peco,
     sources::{Cdr, GhqRepository, GitBranch, GitStatus, History, Process},
     widgets::{
         CdGhqRepository, Cdr as CdrWidget, CheckoutGitBranch, ExecuteHistory, GitAdd,
-        InsertGitBranch, Kill, Widget,
+        InsertGitBranch, Kill, PutHistory, Widget,
     },
 };
 use clap::{Parser, Subcommand};
@@ -47,6 +47,8 @@ enum Commands {
         #[arg(short, long)]
         pattern: Option<String>,
     },
+    /// Put a command from history
+    PutHistory,
     /// Change to a recent directory
     Cdr,
     /// Kill a process
@@ -98,6 +100,13 @@ fn main() -> anyframe_rs::Result<()> {
             let selector = Peco::new(None);
             let action = Execute;
             let widget = GitAdd::new(source, selector, action);
+            widget.run()?;
+        }
+        Commands::PutHistory => {
+            let source = History;
+            let selector = Peco::new(None);
+            let action = Put::new(false);
+            let widget = PutHistory::new(source, selector, action);
             widget.run()?;
         }
         Commands::Cdr => {
