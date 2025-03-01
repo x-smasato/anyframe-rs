@@ -188,6 +188,37 @@ impl<S: Source, F: Selector, A: Action> Widget for GitAdd<S, F, A> {
         "git-add"
     }
 }
+/// Cdr widget
+pub struct Cdr<S: Source, F: Selector, A: Action> {
+    source: S,
+    selector: F,
+    action: A,
+}
+
+impl<S: Source, F: Selector, A: Action> Cdr<S, F, A> {
+    /// Create a new Cdr widget
+    pub fn new(source: S, selector: F, action: A) -> Self {
+        Self {
+            source,
+            selector,
+            action,
+        }
+    }
+}
+
+impl<S: Source, F: Selector, A: Action> Widget for Cdr<S, F, A> {
+    fn run(&self) -> Result<()> {
+        let data = self.source.get_data()?;
+        let selected = self.selector.select(&data, None)?;
+        self.action.perform(&selected)?;
+
+        Ok(())
+    }
+
+    fn name(&self) -> &'static str {
+        "cdr"
+    }
+}
 /// Kill process widget
 pub struct Kill<S: Source, F: Selector, A: Action> {
     source: S,
@@ -224,3 +255,4 @@ impl<S: Source, F: Selector, A: Action> Widget for Kill<S, F, A> {
         "kill"
     }
 }
+// Similar implementations for other widgets to be added
