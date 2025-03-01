@@ -9,7 +9,6 @@
 #![allow(clippy::uninlined_format_args)]
 #![allow(clippy::doc_markdown)]
 #![allow(clippy::missing_const_for_fn)]
-
 #![allow(clippy::option_if_let_else)]
 #![deny(clippy::all)]
 #![deny(clippy::correctness)]
