@@ -15,14 +15,35 @@ pub trait Action {
 }
 
 /// Execute action
+///
+/// Executes the selected command in zsh.
+/// Similar to the original anyframe-action-execute function.
 pub struct Execute;
 
 impl Action for Execute {
-    fn perform(&self, _item: &str) -> Result<()> {
-        // Implementation to execute the selected command
-        // This will need to interact with zsh to execute the command
+    fn perform(&self, item: &str) -> Result<()> {
+        // Execute the selected command in zsh
+        // We use BUFFER and accept-line to execute the command in zsh
+        // This is similar to how the original anyframe-action-execute function works
+        let execute_output = Command::new("zsh")
+            .arg("-c")
+            .arg(format!(
+                "BUFFER=\"{}\"; zle accept-line 2>/dev/null || eval \"$BUFFER\"",
+                item.replace("\"", "\\\"").replace("$", "\\$")
+            ))
+            .output()
+            .map_err(|e| {
+                error::AnyframeError::ActionError(format!("Failed to execute command: {}", e))
+            })?;
 
-        Ok(()) // Placeholder
+        if !execute_output.status.success() {
+            return Err(error::AnyframeError::ActionError(format!(
+                "Execute command failed: {}",
+                String::from_utf8_lossy(&execute_output.stderr)
+            )));
+        }
+
+        Ok(())
     }
 
     fn name(&self) -> &str {
