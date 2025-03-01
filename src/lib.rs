@@ -5,6 +5,10 @@
 #![warn(clippy::unwrap_used)]
 #![warn(clippy::expect_used)]
 #![allow(clippy::module_name_repetitions)]
+#![allow(clippy::missing_errors_doc)]
+#![allow(clippy::uninlined_format_args)]
+#![allow(clippy::doc_markdown)]
+#![allow(clippy::missing_const_for_fn)]
 #![deny(clippy::all)]
 #![deny(clippy::correctness)]
 #![deny(clippy::suspicious)]
@@ -17,7 +21,6 @@ pub mod actions;
 pub mod selectors;
 pub mod sources;
 pub mod widgets;
-pub mod clippy_test;
 
 /// Core error types for anyframe-rs
 pub mod error {

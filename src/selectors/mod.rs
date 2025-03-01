@@ -21,6 +21,7 @@ pub struct Peco {
 
 impl Peco {
     /// Create a new Peco selector
+    #[must_use]
     pub fn new(path: Option<String>) -> Self {
         Self {
             path: path.unwrap_or_else(|| "peco".to_string()),
