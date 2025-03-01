@@ -29,7 +29,7 @@ impl Action for Execute {
             .arg("-c")
             .arg(format!(
                 "BUFFER=\"{}\"; zle accept-line 2>/dev/null || eval \"$BUFFER\"",
-                item.replace("\"", "\\\"").replace("$", "\\$")
+                item.replace('"', "\\\"").replace('$', "\\$")
             ))
             .output()
             .map_err(|e| {
