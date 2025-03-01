@@ -16,8 +16,13 @@ anyframe-widget-execute-history() {
     "$ANYFRAME_RS_PATH" execute-history
 }
 
+anyframe-widget-insert-git-branch() {
+    "$ANYFRAME_RS_PATH" insert-git-branch
+}
+
 # Register widgets with zle
 zle -N anyframe-widget-execute-history
+zle -N anyframe-widget-insert-git-branch
 
 # Example keybindings (commented out by default)
 # bindkey '^r' anyframe-widget-execute-history
