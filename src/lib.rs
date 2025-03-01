@@ -22,7 +22,7 @@
 //! ```rust,no_run
 //! use anyframe_rs::{
 //!     actions::Execute,
-//!     selectors::{Fzf, FzfTmux, Peco},
+//!     selectors::{Fzf, FzfTmux, Peco, Percol},
 //!     sources::History,
 //!     widgets::{ExecuteHistory, Widget},
 //! };
@@ -31,6 +31,13 @@
 //!     // Using Fzf selector
 //!     let source = History;
 //!     let selector = Fzf::new(None);
+//!     let action = Execute;
+//!     let widget = ExecuteHistory::new(source, selector, action);
+//!     widget.run()?;
+//!
+//!     // Or using Percol selector
+//!     let source = History;
+//!     let selector = Percol::new(None);
 //!     let action = Execute;
 //!     let widget = ExecuteHistory::new(source, selector, action);
 //!     widget.run()?;

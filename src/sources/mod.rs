@@ -329,4 +329,36 @@ impl Source for GitStatus {
         "git-status"
     }
 }
+/// Cdr source
+pub struct Cdr;
+
+impl Source for Cdr {
+    fn get_data(&self) -> Result<String> {
+        // Get cdr list using zsh
+        let cdr_output = Command::new("zsh")
+            .arg("-c")
+            .arg("cdr -l | sed 's/^[^ ][^ ]*  *//'")
+            .output()
+            .map_err(|e| {
+                error::AnyframeError::SourceError(format!("Failed to execute cdr: {}", e))
+            })?;
+
+        if !cdr_output.status.success() {
+            return Err(error::AnyframeError::SourceError(format!(
+                "cdr command failed: {}",
+                String::from_utf8_lossy(&cdr_output.stderr)
+            )));
+        }
+
+        let cdr_str = String::from_utf8(cdr_output.stdout).map_err(|e| {
+            error::AnyframeError::SourceError(format!("Invalid UTF-8 in cdr output: {}", e))
+        })?;
+
+        Ok(cdr_str)
+    }
+
+    fn name(&self) -> &'static str {
+        "cdr"
+    }
+}
 // Similar implementations for other sources to be added
