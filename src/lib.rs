@@ -37,6 +37,25 @@
 //! }
 //! ```
 
+#![warn(clippy::pedantic)]
+#![warn(clippy::nursery)]
+#![warn(clippy::unwrap_used)]
+#![warn(clippy::expect_used)]
+#![allow(clippy::module_name_repetitions)]
+#![allow(clippy::missing_errors_doc)]
+#![allow(clippy::uninlined_format_args)]
+#![allow(clippy::doc_markdown)]
+#![allow(clippy::missing_const_for_fn)]
+#![allow(clippy::option_if_let_else)]
+#![allow(clippy::unnecessary_literal_unwrap)]
+#![deny(clippy::all)]
+#![deny(clippy::correctness)]
+#![deny(clippy::suspicious)]
+#![deny(clippy::complexity)]
+#![deny(clippy::perf)]
+#![deny(clippy::style)]
+#![deny(clippy::must_use_candidate)]
+
 pub mod actions;
 pub mod selectors;
 pub mod sources;

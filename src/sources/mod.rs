@@ -42,7 +42,7 @@ impl Source for History {
         Ok(history_str)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "history"
     }
 }
@@ -79,7 +79,7 @@ impl Source for Directory {
         Ok(file_list)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "directory"
     }
 }
@@ -121,7 +121,7 @@ impl Source for Process {
         Ok(ps_str)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "process"
     }
 }
@@ -154,7 +154,7 @@ impl Source for GhqRepository {
         Ok(ghq_str)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "ghq-repository"
     }
 }
@@ -168,6 +168,7 @@ pub struct GitBranch {
 
 impl GitBranch {
     /// Create a new GitBranch source
+    #[must_use]
     pub fn new(
         include_current_branch: bool,
         show_remote_branches: bool,
@@ -237,7 +238,7 @@ impl Source for GitBranch {
         Ok(processed_output)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "git-branch"
     }
 }
@@ -249,6 +250,7 @@ pub struct GitStatus {
 
 impl GitStatus {
     /// Create a new GitStatus source
+    #[must_use]
     pub fn new(pattern: Option<String>) -> Self {
         Self { pattern }
     }
@@ -323,7 +325,7 @@ impl Source for GitStatus {
         Ok(processed_output)
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "git-status"
     }
 }

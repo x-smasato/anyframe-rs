@@ -40,7 +40,7 @@ impl<S: Source, F: Selector, A: Action> Widget for ExecuteHistory<S, F, A> {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "execute-history"
     }
 }
@@ -72,7 +72,7 @@ impl<S: Source, F: Selector, A: Action> Widget for CdGhqRepository<S, F, A> {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "cd-ghq-repository"
     }
 }
@@ -110,7 +110,7 @@ impl<S: Source, F: Selector, A: Action> Widget for CheckoutGitBranch<S, F, A> {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "checkout-git-branch"
     }
 }
@@ -147,7 +147,7 @@ impl<S: Source, F: Selector, A: Action> Widget for InsertGitBranch<S, F, A> {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "insert-git-branch"
     }
 }
@@ -184,7 +184,7 @@ impl<S: Source, F: Selector, A: Action> Widget for GitAdd<S, F, A> {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "git-add"
     }
 }

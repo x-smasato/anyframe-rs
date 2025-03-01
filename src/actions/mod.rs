@@ -46,7 +46,7 @@ impl Action for Execute {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "execute"
     }
 }
@@ -78,7 +78,7 @@ impl Action for Insert {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "insert"
     }
 }
@@ -108,7 +108,7 @@ impl Action for ChangeDirectory {
         Ok(())
     }
 
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "change-directory"
     }
 }
