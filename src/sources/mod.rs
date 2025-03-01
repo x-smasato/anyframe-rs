@@ -2,7 +2,8 @@
 //!
 //! Sources provide data to be filtered, such as command history, directories, processes, etc.
 
-use crate::Result;
+use crate::{error, Result};
+use std::process::Command;
 
 /// Trait for sources
 pub trait Source {
@@ -18,10 +19,27 @@ pub struct History;
 
 impl Source for History {
     fn get_data(&self) -> Result<String> {
-        // Implementation to get command history
-        // This will need to interact with zsh to get the history
+        // Get command history using zsh
+        let history_output = Command::new("zsh")
+            .arg("-c")
+            .arg("history -n -r 1 | awk '!a[$0]++'")
+            .output()
+            .map_err(|e| {
+                error::AnyframeError::SourceError(format!("Failed to execute zsh: {}", e))
+            })?;
 
-        Ok("Command history data".to_string()) // Placeholder
+        if !history_output.status.success() {
+            return Err(error::AnyframeError::SourceError(format!(
+                "zsh command failed: {}",
+                String::from_utf8_lossy(&history_output.stderr)
+            )));
+        }
+
+        let history_str = String::from_utf8(history_output.stdout).map_err(|e| {
+            error::AnyframeError::SourceError(format!("Invalid UTF-8 in history output: {}", e))
+        })?;
+
+        Ok(history_str)
     }
 
     fn name(&self) -> &str {
