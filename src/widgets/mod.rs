@@ -210,16 +210,16 @@ impl<S: Source, F: Selector, A: Action> Widget for Kill<S, F, A> {
     fn run(&self) -> Result<()> {
         let data = self.source.get_data()?;
         let selected = self.selector.select(&data, None)?;
-        
+
         // Extract the first field (PID) from the selected line
         let pid = selected.split_whitespace().next().unwrap_or("");
-        
+
         // Execute kill command
         self.action.perform(&format!("kill {}", pid))?;
-        
+
         Ok(())
     }
-    
+
     fn name(&self) -> &'static str {
         "kill"
     }
