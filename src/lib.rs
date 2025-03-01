@@ -22,15 +22,15 @@
 //! ```rust,no_run
 //! use anyframe_rs::{
 //!     actions::Execute,
-//!     selectors::{Peco, Percol, FzfTmux},
+//!     selectors::{Fzf, FzfTmux, Peco, Percol},
 //!     sources::History,
 //!     widgets::{ExecuteHistory, Widget},
 //! };
 //!
 //! fn main() -> anyframe_rs::Result<()> {
-//!     // Using Peco selector
+//!     // Using Fzf selector
 //!     let source = History;
-//!     let selector = Peco::new(None);
+//!     let selector = Fzf::new(None);
 //!     let action = Execute;
 //!     let widget = ExecuteHistory::new(source, selector, action);
 //!     widget.run()?;
