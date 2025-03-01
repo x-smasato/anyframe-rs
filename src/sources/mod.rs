@@ -126,4 +126,37 @@ impl Source for Process {
     }
 }
 
+/// Ghq repository source
+pub struct GhqRepository;
+
+impl Source for GhqRepository {
+    fn get_data(&self) -> Result<String> {
+        // Get ghq repository list using ghq command
+        let ghq_output = Command::new("ghq")
+            .arg("list")
+            .arg("--full-path")
+            .output()
+            .map_err(|e| {
+                error::AnyframeError::SourceError(format!("Failed to execute ghq command: {}", e))
+            })?;
+
+        if !ghq_output.status.success() {
+            return Err(error::AnyframeError::SourceError(format!(
+                "ghq command failed: {}",
+                String::from_utf8_lossy(&ghq_output.stderr)
+            )));
+        }
+
+        let ghq_str = String::from_utf8(ghq_output.stdout).map_err(|e| {
+            error::AnyframeError::SourceError(format!("Invalid UTF-8 in ghq output: {}", e))
+        })?;
+
+        Ok(ghq_str)
+    }
+
+    fn name(&self) -> &str {
+        "ghq-repository"
+    }
+}
+
 // Similar implementations for other sources to be added
