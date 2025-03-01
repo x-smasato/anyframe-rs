@@ -252,6 +252,7 @@ impl<S: Source, F: Selector, A: Action> Widget for Cdr<S, F, A> {
         "cdr"
     }
 }
+
 /// Kill process widget
 pub struct Kill<S: Source, F: Selector, A: Action> {
     source: S,
