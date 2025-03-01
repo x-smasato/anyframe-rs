@@ -84,4 +84,46 @@ impl Source for Directory {
     }
 }
 
+/// Process source
+pub struct Process;
+
+impl Source for Process {
+    fn get_data(&self) -> Result<String> {
+        // Get process list using ps command
+        let username = std::env::var("USER").map_err(|e| {
+            error::AnyframeError::SourceError(format!(
+                "Failed to get USER environment variable: {}",
+                e
+            ))
+        })?;
+
+        let ps_output = Command::new("ps")
+            .arg("-u")
+            .arg(&username)
+            .arg("-o")
+            .arg("pid,stat,%cpu,%mem,cputime,command")
+            .output()
+            .map_err(|e| {
+                error::AnyframeError::SourceError(format!("Failed to execute ps command: {}", e))
+            })?;
+
+        if !ps_output.status.success() {
+            return Err(error::AnyframeError::SourceError(format!(
+                "ps command failed: {}",
+                String::from_utf8_lossy(&ps_output.stderr)
+            )));
+        }
+
+        let ps_str = String::from_utf8(ps_output.stdout).map_err(|e| {
+            error::AnyframeError::SourceError(format!("Invalid UTF-8 in ps output: {}", e))
+        })?;
+
+        Ok(ps_str)
+    }
+
+    fn name(&self) -> &str {
+        "process"
+    }
+}
+
 // Similar implementations for other sources to be added
