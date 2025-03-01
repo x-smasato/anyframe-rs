@@ -5,7 +5,8 @@ use anyframe_rs::{
     selectors::Peco,
     sources::{Cdr, GhqRepository, GitBranch, GitStatus, History},
     widgets::{
-        CdGhqRepository, CheckoutGitBranch, Cdr as CdrWidget, ExecuteHistory, GitAdd, InsertGitBranch, Widget,
+        CdGhqRepository, Cdr as CdrWidget, CheckoutGitBranch, ExecuteHistory, GitAdd,
+        InsertGitBranch, Widget,
     },
 };
 use clap::{Parser, Subcommand};
