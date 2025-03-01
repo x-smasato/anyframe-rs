@@ -33,7 +33,7 @@ impl Action for Execute {
 pub struct Insert;
 
 impl Action for Insert {
-    fn perform(&self, item: &str) -> Result<()> {
+    fn perform(&self, _item: &str) -> Result<()> {
         // Implementation to insert the selected item
         // This will need to interact with zsh to insert the item
 
